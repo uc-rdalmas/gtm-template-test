@@ -1,0 +1,177 @@
+<html lang="en"><script type="text/javascript" async="" src="https://www.googletagmanager.com/debug/bootstrap"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-N5L6VFR"></script><script>(function(){let e=null,t=null,o=[];const n=window.fetch,s=window.XMLHttpRequest.prototype.open,r=window.XMLHttpRequest.prototype.send,i=window.XMLHttpRequest.prototype.setRequestHeader;function c(){let e=[];return{subscribe:t=>{e.push(t)},next:t=>{e.length&&e.forEach((e=>e(t)))},clear:()=>{e.length=0}}}const a=new c,d=new WeakMap,E=new WeakMap,l=new WeakMap;window.XMLHttpRequest.prototype.open=function(...t){d.set(this,{method:t[0]&&t[0].toUpperCase()||"GET"});const o=t.slice(-1)[0];if("_TWEAK_CALL_ORIGINAL_XHR_OPEN_"===o&&t.pop(),"_TWEAK_CALL_ORIGINAL_XHR_OPEN_"===o||"OFF"===e){s.apply(this,t);const e=E.get(this);e&&e.next()}else{const e=E.get(this)||new c;E.set(this,e),this.__headersReady=function(e,t){let o=null;return()=>{o&&clearTimeout(o),o=setTimeout((()=>{e()}),t)}}((()=>{this.__onPendingHeadersSet&&this.__onPendingHeadersSet()}),50),a.subscribe((()=>{window.XMLHttpRequest.prototype.open.apply(this,t)}))}},window.XMLHttpRequest.prototype.setRequestHeader=function(...t){if(this.readyState===XMLHttpRequest.OPENED||"OFF"===e)i.apply(this,t);else{l.set(this,!0);const e=E.get(this);e&&e.subscribe((()=>{i.apply(this,t),this.__headersReady()}))}},window.XMLHttpRequest.prototype.send=function(n,s){if(this.addEventListener("readystatechange",(()=>{if("OFF"!==t&&this.readyState===XMLHttpRequest.DONE&&!(this.status<200||this.status>=300))try{const e=d.get(this),s=e&&"string"==typeof e.method&&e.method.toUpperCase()||"";let r,i=[];try{const e=this.getAllResponseHeaders();i=(e&&e.trim().split(/[\r\n]+/)).reduce(((e,t)=>{try{const o=t.split(": "),n=o.shift(),s=o.join(": ");e.push({active:!0,header:n,value:s})}catch(e){}return e}),[])}catch(e){i=[]}try{r="string"==typeof this.response?this.response:JSON.stringify(this.response)}catch(e){r=this.response}const c={type:"STASH_REQUESTS",payload:[[{method:s,requestURL:this.responseURL,responsePayload:r,requestPayload:n,timestamp:Date.now(),responseHeaders:i}]]};"ON"===t?window.postMessage(c,"*"):o.push(c.payload[0][0])}catch(e){}})),"OFF"===e)r.call(this,n);else if(l.get(this))this.__onPendingHeadersSet=()=>{l.delete(this),window.XMLHttpRequest.prototype.send.call(this,n),this.__onPendingHeadersSet=null};else if(this.readyState===XMLHttpRequest.OPENED&&"_TWEAK_BYPASS_ORIGINAL_XHR_SEND_"===s){Object.defineProperty(this,"readyState",{writable:!0,configurable:!0,value:XMLHttpRequest.LOADING});const e=new Event("readystatechange");this.dispatchEvent(e)}else if(this.readyState===XMLHttpRequest.OPENED&&"_TWEAK_CALL_ORIGINAL_XHR_SEND_"===s){const e=n||""===n?[n]:void 0;r.call(this,e)}else{const e=E.get(this);e&&e.subscribe((()=>{window.XMLHttpRequest.prototype.send.call(this,n),this.__onopened=null}))}},window.fetch=(...s)=>{const[,,r]=s,[i,c]=s,d="string"==typeof i,E=d?i:i.url||"",l=d?c&&c.method:i&&i.method,u=function(e,t){return new Promise((o=>{if("string"==typeof e){const e=t&&t.body||null;o(e)}else try{e.clone().text().then((e=>{o(e)})).catch((e=>{o(null)}))}catch(e){o(null)}}))}(i,c);return"_CALL_ORIGINAL_FETCH_"===r||"OFF"===e?n(...s).then((async e=>{if("OFF"===t)return e;if(e.status<200||e.status>=300)return e;try{const n=await u;let s;try{s=n.replace(/\s/gi,"")}catch(e){s=n}const r=e.clone(),i=await r.text();let c=[];try{for(const e of r.headers.entries()){const t=e[0],o=e[1];c.push({active:!0,header:t,value:o})}}catch(e){c=[]}const a={type:"STASH_REQUESTS",payload:[[{method:l&&l.toUpperCase()||"GET",requestURL:E,responsePayload:i,requestPayload:s,responseHeaders:c,timestamp:Date.now()}]]};"ON"===t?window.postMessage(a,"*"):o.push(a.payload[0][0])}catch(e){}return e})):((...e)=>new Promise((t=>{a.subscribe((()=>{t(window.fetch(...e))}))})))(...s)},a.subscribe((()=>{try{window.postMessage({type:"__TWEAK_BOOTSTRAP_FINISHED__",payload:[]})}catch(e){0}}));const u=["ON","OFF"];window.__onttis=t=>{t&&u.includes(t)&&(e&&u.includes(e)?e=t:(e=t,a.next()))},window.__onttss__=(e,n)=>{if(e&&u.includes(e)){if("OFF"===e&&"user"===n&&o.length)o=[];else if("ON"===e&&"system"===n&&o.length)try{window.postMessage({type:"STASH_REQUESTS",payload:[o]})}catch(e){0}o=[],t=e}}})();</script><script id="__tweak_browser_extension_intercept_script__" async="false" defer="false" src="chrome-extension://feahianecghpnipmhphmfgmpdodhcapi/intercept.bundle.js"></script><script type="text/javascript" class="__REQUESTLY__SCRIPT">(function (namespace) {
+  window[namespace] = window[namespace] || {};
+  window[namespace].responseRules = {};
+
+  const isApplicableOnUrl = (url) =>
+    window[namespace].responseRules.hasOwnProperty(url);
+  const getResponseRule = (url) => window[namespace].responseRules[url];
+  const notifyRuleApplied = (rule) => {
+    window.postMessage(
+      {
+        from: "requestly",
+        type: "response_rule_applied",
+        id: rule.id,
+      },
+      window.location.href
+    );
+  };
+
+  // Intercept XMLHttpRequest
+  const onReadyStateChange = function () {
+    if (this.readyState === 4 && isApplicableOnUrl(this.responseURL)) {
+      const responseRule = getResponseRule(this.responseURL);
+      const { response } = responseRule;
+      const responseType = this.responseType;
+      const customResponse =
+        response.type === "code"
+          ? responseRule.evaluator({
+              method: this.method,
+              url: this.responseURL,
+              requestHeaders: this.requestHeaders,
+              requestData: this.requestData,
+              responseType: this.responseType,
+              response: this.response,
+            })
+          : response.value;
+
+      Object.defineProperty(this, "response", {
+        get: function () {
+          if (response.type === "static" && responseType === "json") {
+            return JSON.parse(customResponse);
+          }
+          return customResponse;
+        },
+      });
+
+      if (responseType === "" || responseType === "text") {
+        Object.defineProperty(this, "responseText", {
+          get: function () {
+            return customResponse;
+          },
+        });
+      }
+
+      notifyRuleApplied(responseRule);
+    }
+  };
+
+  const XHR = XMLHttpRequest;
+  XMLHttpRequest = function () {
+    const xhr = new XHR();
+    xhr.addEventListener(
+      "readystatechange",
+      onReadyStateChange.bind(xhr),
+      false
+    );
+    return xhr;
+  };
+  XMLHttpRequest.prototype = XHR.prototype;
+  Object.entries(XHR).map(([key, val]) => {
+    XMLHttpRequest[key] = val;
+  });
+
+  const open = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function (method) {
+    this.method = method;
+    open.apply(this, arguments);
+  };
+
+  const send = XMLHttpRequest.prototype.send;
+  XMLHttpRequest.prototype.send = function (data) {
+    this.requestData = data;
+    send.apply(this, arguments);
+  };
+
+  let setRequestHeader = XMLHttpRequest.prototype.setRequestHeader;
+  XMLHttpRequest.prototype.setRequestHeader = function (header, value) {
+    this.requestHeaders = this.requestHeaders || {};
+    this.requestHeaders[header] = value;
+    setRequestHeader.apply(this, arguments);
+  };
+
+  // Intercept fetch API
+  const _fetch = fetch;
+  fetch = async (resource, initOptions) => {
+    const url =
+      resource instanceof Request ? resource.url : resource.toString();
+    const fetchedResponse = await _fetch(resource, initOptions);
+
+    if (!isApplicableOnUrl(url)) {
+      return fetchedResponse;
+    }
+
+    let method, requestHeaders, requestData;
+
+    if (resource instanceof Request) {
+      const request = resource.clone();
+      method = request.method || "GET";
+      requestHeaders =
+        request.headers &&
+        Array.from(request.headers).reduce((obj, [key, val]) => {
+          obj[key] = val;
+          return obj;
+        }, {});
+      requestData = await request.text();
+    } else {
+      method = initOptions.method || "GET";
+      if (initOptions.headers instanceof Headers) {
+        requestHeaders = Array.from(initOptions.headers).reduce(
+          (obj, [key, val]) => {
+            obj[key] = val;
+            return obj;
+          },
+          {}
+        );
+      } else {
+        requestHeaders = initOptions.headers;
+      }
+      requestData = initOptions.body;
+    }
+
+    const responseRule = getResponseRule(url);
+    const customResponseText =
+      responseRule.response.type === "code"
+        ? responseRule.evaluator({
+            method,
+            url,
+            requestHeaders,
+            requestData,
+            response: await fetchedResponse.text(),
+          })
+        : responseRule.response.value;
+
+    notifyRuleApplied(responseRule);
+
+    return new Response(new Blob([customResponseText]), {
+      status: fetchedResponse.status,
+      statusText: fetchedResponse.statusText,
+      headers: fetchedResponse.headers,
+    });
+  };
+})('__REQUESTLY__')</script><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <!-- Google Tag Manager -->
+ <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-N5L6VFR');</script>
+  <!-- End Google Tag Manager -->
+
+ 
+
+
+</head>
+
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N5L6VFR"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <div>GTM Test Page</div>
+
+
+<gtm-debug-badge></gtm-debug-badge></body></html>
